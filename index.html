@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MomasPay Logger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+    <header id="toolbar">
+      <div class="toolbar-left">
+        <h1 class="app-title">MomasPay Logger</h1>
+        <select id="level-filter">
+          <option value="">All Levels</option>
+          <option value="INFO">INFO</option>
+          <option value="ERROR">ERROR</option>
+          <option value="WARNING">WARNING</option>
+          <option value="DEBUG">DEBUG</option>
+          <option value="CRITICAL">CRITICAL</option>
+        </select>
+        <input type="text" id="search-input" placeholder="Search messages..." />
+      </div>
+      <div class="toolbar-right">
+        <label class="auto-refresh-label">
+          <input type="checkbox" id="auto-refresh-toggle" />
+          Auto-refresh
+        </label>
+        <select id="refresh-interval">
+          <option value="3000">3s</option>
+          <option value="5000" selected>5s</option>
+          <option value="10000">10s</option>
+          <option value="30000">30s</option>
+        </select>
+        <span id="filter-count" class="filter-count"></span>
+      </div>
+    </header>
+
+    <main id="log-container">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th class="col-time">Time</th>
+            <th class="col-level">Level</th>
+            <th class="col-message">Message</th>
+            <th class="col-expand"></th>
+          </tr>
+        </thead>
+        <tbody id="log-body"></tbody>
+      </table>
+      <div id="empty-state" class="empty-state hidden">No logs found</div>
+      <div id="loading" class="loading">Loading...</div>
+    </main>
+
+    <footer id="pagination">
+      <button id="prev-btn" disabled>&larr; Prev</button>
+      <span id="page-info">Page 1 of 1</span>
+      <span id="total-info" class="total-info"></span>
+      <button id="next-btn" disabled>Next &rarr;</button>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
