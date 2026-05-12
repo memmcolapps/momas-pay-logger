@@ -67,6 +67,50 @@ input, select, button {
   gap: 8px;
 }
 
+#filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.filter-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+#filter-bar input[type="datetime-local"],
+#filter-bar select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 8px;
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+#reset-filters {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 10px;
+  color: var(--text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+#reset-filters:hover {
+  border-color: var(--color-accent);
+}
+
 #toolbar select, #toolbar input[type="text"] {
   background: var(--bg-primary);
   border: 1px solid var(--border);

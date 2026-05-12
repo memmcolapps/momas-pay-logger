@@ -6,19 +6,8 @@ const emptyEl = () => document.getElementById('empty-state');
 const loadingEl = () => document.getElementById('loading');
 const filterCountEl = () => document.getElementById('filter-count');
 
-function getFilteredLogs() {
-  const { logs, filters } = getState();
-  let filtered = logs;
-
-  if (filters.level) {
-    filtered = filtered.filter(l => l.level === filters.level);
-  }
-  if (filters.search) {
-    const q = filters.search.toLowerCase();
-    filtered = filtered.filter(l => l.message.toLowerCase().includes(q));
-  }
-
-  return filtered;
+function hasActiveFilters(filters) {
+  return Boolean(filters.level || filters.message || filters.start_date || filters.end_date);
 }
 
 export function renderLogs() {
@@ -37,12 +26,11 @@ export function renderLogs() {
 
   loading.classList.add('hidden');
 
-  const filtered = getFilteredLogs();
-  const total = state.logs.length;
+  const filtered = state.logs;
+  const total = state.meta?.total ?? filtered.length;
 
-  // Show filter count when filters are active
-  if ((state.filters.level || state.filters.search) && total > 0) {
-    countEl.textContent = `${filtered.length} of ${total}`;
+  if (hasActiveFilters(state.filters) && total > 0) {
+    countEl.textContent = `${total} match${total === 1 ? '' : 'es'}`;
   } else {
     countEl.textContent = '';
   }
@@ -50,7 +38,7 @@ export function renderLogs() {
   if (filtered.length === 0) {
     el.textContent = '';
     empty.classList.remove('hidden');
-    empty.textContent = total === 0 ? 'No logs found' : 'No logs match filters';
+    empty.textContent = hasActiveFilters(state.filters) ? 'No logs match filters' : 'No logs found';
     return;
   }
 
@@ -82,11 +70,11 @@ export function renderLogs() {
       const td = document.createElement('td');
       td.colSpan = 4;
 
-      const highlighted = highlightJSON(log.context);
+      const highlighted = highlightJSON(log);
       if (highlighted) {
         td.innerHTML = `<pre class="context-pre">${highlighted}</pre>`;
       } else {
-        td.innerHTML = '<div class="context-empty">No context data</div>';
+        td.innerHTML = '<div class="context-empty">No data</div>';
       }
 
       ctxTr.appendChild(td);

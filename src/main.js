@@ -1,22 +1,35 @@
 import './style.css';
 import { getState, setState, subscribe } from './state.js';
-import { fetchLogs } from './api.js';
+import { fetchLogs, queryLogs } from './api.js';
 import { renderLogs, initLogTable } from './components/logTable.js';
 import { initFilters } from './components/filters.js';
 import { renderPagination, initPagination } from './components/pagination.js';
 import { initAutoRefresh } from './components/autoRefresh.js';
 
-// Subscribe renderers to state changes
 subscribe(() => {
   renderLogs();
   renderPagination();
 });
 
-// Fetch logs for a given page
+function hasActiveFilters(f) {
+  return Boolean(
+    f.level ||
+    f.message ||
+    f.start_date ||
+    f.end_date ||
+    (f.sort_by && f.sort_by !== 'created_at') ||
+    (f.sort_order && f.sort_order !== 'desc')
+  );
+}
+
 async function loadLogs(page) {
+  const { filters, meta } = getState();
+  const perPage = meta.per_page || 50;
   setState({ loading: true });
 
-  const result = await fetchLogs(page);
+  const result = hasActiveFilters(filters)
+    ? await queryLogs({ ...filters, page, per_page: perPage })
+    : await fetchLogs(page, perPage);
 
   if (result.status) {
     setState({
@@ -30,17 +43,14 @@ async function loadLogs(page) {
   }
 }
 
-// Refresh current page (used by auto-refresh)
 async function refreshCurrentPage() {
   const { meta } = getState();
-  await loadLogs(meta.current_page);
+  await loadLogs(meta.current_page || 1);
 }
 
-// Initialize components
 initLogTable();
-initFilters();
+initFilters(() => loadLogs(1));
 initPagination((page) => loadLogs(page));
 initAutoRefresh(refreshCurrentPage);
 
-// Load first page on startup
 loadLogs(1);

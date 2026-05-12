@@ -15,11 +15,10 @@
         <h1 class="app-title">MomasPay Logger</h1>
         <select id="level-filter">
           <option value="">All Levels</option>
-          <option value="INFO">INFO</option>
-          <option value="ERROR">ERROR</option>
-          <option value="WARNING">WARNING</option>
-          <option value="DEBUG">DEBUG</option>
-          <option value="CRITICAL">CRITICAL</option>
+          <option value="info">INFO</option>
+          <option value="error">ERROR</option>
+          <option value="warning">WARNING</option>
+          <option value="debug">DEBUG</option>
         </select>
         <input type="text" id="search-input" placeholder="Search messages..." />
       </div>
@@ -37,6 +36,33 @@
         <span id="filter-count" class="filter-count"></span>
       </div>
     </header>
+
+    <div id="filter-bar">
+      <label class="filter-field">
+        <span>From</span>
+        <input type="datetime-local" id="start-date" />
+      </label>
+      <label class="filter-field">
+        <span>To</span>
+        <input type="datetime-local" id="end-date" />
+      </label>
+      <label class="filter-field">
+        <span>Sort</span>
+        <select id="sort-by">
+          <option value="created_at">Created</option>
+          <option value="timestamp">Timestamp</option>
+          <option value="level">Level</option>
+        </select>
+      </label>
+      <label class="filter-field">
+        <span>Order</span>
+        <select id="sort-order">
+          <option value="desc">Desc</option>
+          <option value="asc">Asc</option>
+        </select>
+      </label>
+      <button id="reset-filters" type="button">Reset filters</button>
+    </div>
 
     <main id="log-container">
       <table class="log-table">

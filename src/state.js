@@ -1,7 +1,14 @@
 const state = {
   logs: [],
   meta: { current_page: 1, per_page: 50, total: 0, last_page: 1 },
-  filters: { level: '', search: '' },
+  filters: {
+    level: '',
+    message: '',
+    start_date: '',
+    end_date: '',
+    sort_by: 'created_at',
+    sort_order: 'desc',
+  },
   polling: { enabled: false, intervalMs: 5000 },
   expandedRows: new Set(),
   loading: false,
