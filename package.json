@@ -8,7 +8,7 @@
     "dev:staging": "vite --mode staging",
     "dev:prod": "vite --mode production",
     "build": "vite build",
-    "build:staging": "vite build --mode staging",
+    "build:staging": "vite build --mode staging && echo '/api/* http://staging.memmserve.com/api/:splat 200' > dist/_redirects",
     "preview": "vite preview"
   },
   "devDependencies": {
