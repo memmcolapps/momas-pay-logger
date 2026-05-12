@@ -6,6 +6,13 @@ import { initFilters } from './components/filters.js';
 import { renderPagination, initPagination } from './components/pagination.js';
 import { initAutoRefresh } from './components/autoRefresh.js';
 
+const envBadge = document.getElementById('env-badge');
+if (envBadge) {
+  const mode = import.meta.env.MODE;
+  envBadge.textContent = mode;
+  envBadge.dataset.env = mode;
+}
+
 subscribe(() => {
   renderLogs();
   renderPagination();

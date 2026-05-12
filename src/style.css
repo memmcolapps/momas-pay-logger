@@ -67,6 +67,18 @@ input, select, button {
   gap: 8px;
 }
 
+.env-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #444;
+  color: #fff;
+}
+.env-badge[data-env="staging"] { background: #b8860b; }
+.env-badge[data-env="production"] { background: #1f6f3f; }
+
 #filter-bar {
   display: flex;
   flex-wrap: wrap;
