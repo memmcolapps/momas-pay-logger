@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://momaspay.memmserve.com";
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
 
 function errorResult(message) {
   return { status: false, message, data: { logs: [], meta: {} } };
